@@ -1,14 +1,23 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const categoryField = document.getElementById('id_category');
-    const newCategoryField = document.getElementById('id_new_category');
-
-    function toggleFields() {
-        if (newCategoryField.value.trim() !== '') {
-            categoryField.disabled = true;
-        } else {
-            categoryField.disabled = false;
-        }
-    }
-
-    newCategoryField.addEventListener('input', toggleFields);
+document.addEventListener("DOMContentLoaded", () => {
+    setupCategory();
+    setupImportant();
 });
+
+function setupCategory() {
+    const categoryField = document.getElementById("id_category");
+    const newCategoryDiv = document.getElementById("new_category_div");
+
+    if (categoryField.value !== "new") newCategoryDiv.style.display = "none";
+
+    categoryField.addEventListener("change", () => {
+        newCategoryDiv.style.display = categoryField.value === "new" ? "flex" : "none";
+    });
+}
+
+function setupImportant() {
+    const importantCheckbox = document.getElementById("id_important");
+
+    importantCheckbox.parentElement.addEventListener("click", () => {
+        importantCheckbox.checked = !importantCheckbox.checked;
+    });
+}

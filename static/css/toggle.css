@@ -1,0 +1,25 @@
+.toggle-checkbox {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.toggle-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.toggle-checkbox label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.5em 0.8em;
+    border: 0.1em solid var(--grey-3); /* Border color */
+    border-radius: 0.2em;
+}
+
+.toggle-checkbox input[type="checkbox"]:checked + label {
+    background-color: var(--color-1);
+    border: none;
+    font-weight: 700;
+}

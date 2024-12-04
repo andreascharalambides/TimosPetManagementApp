@@ -3,10 +3,29 @@
 {% block title %}Add a New Pet{% endblock %}
 
 {% block content %}
-  <h2>Add a New Pet</h2>
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Pet</button>
-  </form>
+    <form class="block-layout" method="POST" enctype="multipart/form-data">
+        <h2>Add a New Pet</h2>
+        {% csrf_token %}
+        <div class="form-input-block">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+        <div class="form-input-block">
+            {{ form.dob.label_tag }}
+            {{ form.dob }}
+            {{ form.dob.errors }}
+        </div>
+        <div class="form-input-block">
+            {{ form.breed.label_tag }}
+            {{ form.breed }}
+            {{ form.breed.errors }}
+        </div>
+        <div class="form-input-block">
+            {{ form.photo.label_tag }}
+            {{ form.photo }}
+            {{ form.photo.errors }}
+        </div>
+        <button type="submit" class="primary-button">Add Pet</button>
+    </form>
 {% endblock %}

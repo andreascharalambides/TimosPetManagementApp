@@ -2,26 +2,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vars.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+    <link rel="stylesheet" href="{% static 'css/buttons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/day-selector.css' %}">
+    <link rel="stylesheet" href="{% static 'css/toggle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pet-profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/task-list.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pet-list.css' %}">
 </head>
 <body>
 <nav>
     {% if user.is_authenticated %}
-        <p>Hello, {{ user.first_name }}!</p>
+        {% if request.path != '/' and request.path != '/pets/' %}
+            <p id="back-button"></p>
+        {% endif %}
+        <div style="flex-grow: 1"></div>
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button type="submit">Logout</button>
+            <button type="submit" class="secondary-button">Logout</button>
         </form>
-    {% else %}
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'register' %}">Register</a>
     {% endif %}
 </nav>
 
 {% block content %}
 {% endblock %}
 
+<script>
+    const backArrowUrl = "{% static 'assets/icons/back-arrow.svg' %}";
+</script>
 <script src="{% static 'js/scripts.js' %}"></script>
 </body>
 </html>

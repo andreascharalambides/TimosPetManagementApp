@@ -1,0 +1,13 @@
+.task-list {
+    border-radius: 0.3em;
+    border: 0.1em solid var(--grey-3);
+    list-style-type: none;
+}
+
+.task-list > li {
+    padding: 1em;
+}
+
+.task-list > li + li {
+    border-bottom: 0.1em solid var(--grey-3);
+}

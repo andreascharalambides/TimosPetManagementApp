@@ -2,29 +2,31 @@
 {% load static %}
 
 {% block content %}
-    <h1>Welcome, {{ user.first_name }}!</h1>
+    <div class="block-layout">
+        <h1>Welcome, {{ user.first_name }}!</h1>
+    
+        <ul class="pet-list">
+            {% for pet in pets %}
+                <li><a href="{% url 'pet_detail' pet.pk %}">
+                    <img id="pet-image" src="{{ pet.photo.url }}" alt="{{ pet.name }} Profile">
+                    <h3>{{ pet.name }}</h3>
+                </a></li>
+            {% endfor %}
+                <li><a href="{% url 'add_pet' %}">
+                    +
+                </a></li>
+        </ul>
 
-    <h2>Your Pets</h2>
-    <ul>
-        {% for pet in pets %}
-            <li>
-                <a href="{% url 'pet_detail' pet.pk %}">{{ pet.name }}</a> - Age: {{ pet.age }} years
-            </li>
-        {% empty %}
-            <li>You have no pets yet.</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'add_pet' %}">Add a new pet</a>
-
-    <h2>Your Tasks</h2>
-    <ul>
-        {% for task in tasks %}
-            <li>
-                {{ task.data }} for {{ task.pet.name }} on {{ task.frequently }}
-            </li>
-        {% empty %}
-            <li>You have no tasks yet.</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'add_task' %}">Add a new task</a>
+        <h2>Your Tasks</h2>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    {{ task.data }} for {{ task.pet.name }} on {{ task.frequently }}
+                </li>
+            {% empty %}
+                <li>You have no tasks yet.</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'add_task' %}">Add a new task</a>
+    </div>
 {% endblock %}

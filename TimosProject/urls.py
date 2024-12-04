@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import RedirectView
 
 urlpatterns = [
-       path("admin/", admin.site.urls),
-       path("pets/", include("pets.urls")),
-       path("users/", include("users.urls")),
+    path("admin/", admin.site.urls),
+    path("pets/", include("pets.urls")),
+    path("", RedirectView.as_view(url="/pets/", permanent=False), name="home"),
+    path("users/", include("users.urls")),
 ]
 
 if settings.DEBUG:
@@ -32,4 +34,3 @@ if settings.DEBUG:
 admin.site.site_header = 'Pet Management Admin'
 admin.site.site_title = 'Pet Management Portal'
 admin.site.index_title = 'Welcome to the Pet Management Admin Portal'
-

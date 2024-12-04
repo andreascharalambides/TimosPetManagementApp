@@ -1,0 +1,35 @@
+.day-selector {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5em 0 0 0;
+}
+
+.day-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background-color: var(--grey-4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.day-button input[type="checkbox"] {
+    display: none;
+}
+
+.day-button span {
+    pointer-events: none;
+}
+
+.day-button input[type="checkbox"]:checked + span {
+    font-weight: 700;
+}
+.day-button:has(input[type="checkbox"]:checked) {
+    background-color: var(--color-1);
+}

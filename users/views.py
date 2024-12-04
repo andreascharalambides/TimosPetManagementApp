@@ -1,6 +1,8 @@
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, UserLoginForm
+
 
 def register(request):
     if request.method == 'POST':
@@ -12,3 +14,6 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
+
+class UserLoginView(LoginView):
+    authentication_form = UserLoginForm

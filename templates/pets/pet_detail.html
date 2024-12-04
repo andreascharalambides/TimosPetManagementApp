@@ -2,19 +2,30 @@
 {% load static %}
 
 {% block content %}
-<h2>{{ pet.name }}</h2>
-<img src="{{ pet.photo.url }}" alt="{{ pet.name }}" width="200">
-<p>Breed: {{ pet.breed }}</p>
-<p>Age: {{ pet.age }} years</p>
+    <div class="block-layout">
+        <div id="pet-profile">
+                <img id="pet-image" src="{{ pet.photo.url }}" alt="{{ pet.name }} Profile">
+            <div>
+                <h2>{{ pet.name }}</h2>
+                {% if pet.breed and pet.breed != "" %}
+                    <p>{{ pet.breed }}</p>
+                {% endif %}
+                <p>{{ pet.age }} years old</p>
+            </div>
+        </div>
 
-<h3>Tasks for {{ pet.name }}</h3>
-<ul>
-  {% for task in tasks %}
-    <li>
-      {{ task.data }} on {{ task.frequently }}
-    </li>
-  {% empty %}
-    <li>No tasks for this pet.</li>
-  {% endfor %}
-</ul>
+        <div>
+            <h3>Tasks for {{ pet.name }}</h3>
+            <ul class="task-list">
+            {% for task in tasks %}
+                <li>
+                    <h4>{{ task.category }} at {{ task.start_date|date:"H:i" }}</h4>
+                    <h4>Repeat every {% for day in task.frequently %} {{ day }} {% endfor %}</h4>
+                </li>
+            {% empty %}
+                <li>No tasks for this pet.</li>
+            {% endfor %}
+        </ul>
+        </div>
+    </div>
 {% endblock %}

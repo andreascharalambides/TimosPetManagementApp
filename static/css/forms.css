@@ -1,0 +1,57 @@
+form .form-input-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+}
+
+form .row-form-input-block {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+form input, form select, form textarea {
+    font-size: 1em;
+    padding: 0.5em;
+    border-radius: 0.2em;
+    border: 0.1em solid var(--color-2);
+}
+
+form select option {
+    font-size: 0.5rem;
+    max-width: 0.6vw;
+}
+
+form input:focus, form select:focus, form textarea:focus {
+    border: 0.12em solid var(--color-1);
+    outline: none;
+}
+
+form > ul {
+    background-color: var(--color-3);
+    padding: 1.2em;
+    border-radius: 0.3em;
+    margin: 0;
+    list-style-type: none;
+}
+
+form > ul > li:not(:last-child) {
+    margin-bottom: 0.8em;
+}
+
+form span.helptext, form p:empty {
+    display: none;
+}
+
+form .login-register-instead {
+    text-align: center;
+}
+
+form .login-register-instead a {
+    display: inline;
+}
+
+ul.errorlist {
+    background-color: var(--accent-1-2);
+    color: var(--accent-1-1);
+}

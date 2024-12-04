@@ -7,7 +7,7 @@ class Pet(models.Model):
     name = models.CharField(max_length=100)
     dob = models.DateField()
     breed = models.CharField(max_length=100)
-    photo = models.ImageField(upload_to='pet_photos/', default='pet_photos/default_pet_photo.jpg')
+    photo = models.ImageField(upload_to='pet_photos/', default='pet_photos/default_pet_photo.png')
 
     def __str__(self):
         return self.name

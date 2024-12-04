@@ -54,6 +54,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         new_category_name = form.cleaned_data.get('new_category')
         category = form.cleaned_data.get('category')
 
+        # TODO Handle "--new-type--" case --> only then consider new category
         if new_category_name:
             # Create or get the new category
             new_category, created = Category.objects.get_or_create(
