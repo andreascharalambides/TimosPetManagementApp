@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Add a New Pet{% endblock %}
+
+{% block content %}
+  <h2>Add a New Pet</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Pet</button>
+  </form>
+{% endblock %}

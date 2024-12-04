@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>{{ pet.name }}</h2>
+<img src="{{ pet.photo.url }}" alt="{{ pet.name }}" width="200">
+<p>Breed: {{ pet.breed }}</p>
+<p>Age: {{ pet.age }} years</p>
+
+<h3>Tasks for {{ pet.name }}</h3>
+<ul>
+  {% for task in tasks %}
+    <li>
+      {{ task.data }} on {{ task.frequently }}
+    </li>
+  {% empty %}
+    <li>No tasks for this pet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
