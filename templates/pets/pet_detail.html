@@ -4,7 +4,7 @@
 {% block content %}
     <div class="block-layout">
         <div id="pet-profile">
-                <img id="pet-image" src="{{ pet.photo.url }}" alt="{{ pet.name }} Profile">
+            <img id="pet-image" src="{{ pet.photo.url }}" alt="{{ pet.name }} Profile">
             <div>
                 <h2>{{ pet.name }}</h2>
                 {% if pet.breed and pet.breed != "" %}
@@ -14,18 +14,26 @@
             </div>
         </div>
 
-        <div>
+        <div class="task-list-container">
             <h3>Tasks for {{ pet.name }}</h3>
             <ul class="task-list">
-            {% for task in tasks %}
-                <li>
-                    <h4>{{ task.category }} at {{ task.start_date|date:"H:i" }}</h4>
-                    <h4>Repeat every {% for day in task.frequently %} {{ day }} {% endfor %}</h4>
-                </li>
-            {% empty %}
-                <li>No tasks for this pet.</li>
-            {% endfor %}
-        </ul>
+                {% for task in tasks %}
+                    <li>
+                        <h4>{{ task.category }} at {{ task.start_date|date:"H:i" }}</h4>
+                        <script>
+                            let days = parseFrequently("{{ task.frequently }}");
+                            let dateElement = document.createElement("h4");
+
+                            if (days.length === 7) dateElement.textContent = "Everyday";
+                            else if (days.length > 0) dateElement.textContent = "Every " + days.join(", ");
+                            else dateElement.textContent = "{{ task.start_date|date }}";
+                            document.currentScript.parentElement.appendChild(dateElement);
+                        </script>
+                    </li>
+                {% empty %}
+                    <li>No tasks for {{ pet.name }} yet.</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock %}

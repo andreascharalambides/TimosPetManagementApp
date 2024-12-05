@@ -1,3 +1,15 @@
+.task-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.task-list-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .task-list {
     border-radius: 0.3em;
     border: 0.1em solid var(--grey-3);
@@ -5,9 +17,21 @@
 }
 
 .task-list > li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
     padding: 1em;
 }
 
+.task-list > li > a {
+    text-decoration: none;
+}
+
+.task-list > li > a > h4:not(:first-child) {
+    font-size: 0.8em;
+    color: var(--grey-1);
+}
+
 .task-list > li + li {
-    border-bottom: 0.1em solid var(--grey-3);
+    border-top: 0.1em solid var(--grey-3);
 }

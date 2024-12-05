@@ -1,5 +1,6 @@
-from django.views.generic import TemplateView, DetailView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import redirect
+from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Pet, Task, Category
 from .forms import PetForm, TaskForm
 from django.urls import reverse_lazy
@@ -38,10 +39,10 @@ class PetCreateView(LoginRequiredMixin, CreateView):
 
 # pets/views.py
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskFormView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
-    template_name = 'pets/add_task.html'
+    template_name = 'pets/task_form.html'
     success_url = reverse_lazy('home')
 
     def get_form_kwargs(self):
@@ -74,3 +75,26 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         form.save_m2m()
         return super().form_valid(form)
 
+class TaskCreateView(TaskFormView, CreateView):
+    """View for creating a task."""
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_update'] = False  # Flag for distinguishing between add and update
+        return context
+
+class TaskUpdateView(TaskFormView, UpdateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_update'] = True  # Flag for distinguishing between add and update
+        return context
+
+class TaskDeleteView(DeleteView):
+    model = Task
+    success_url = reverse_lazy('home')  # Redirect to the home page
+
+    def get(self, *args, **kwargs):
+        # Skip confirmation and delete immediately
+        self.object = self.get_object()
+        if self.object.pet.user == self.request.user:
+            self.object.delete()
+        return redirect(self.success_url)

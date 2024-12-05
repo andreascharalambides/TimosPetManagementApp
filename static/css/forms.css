@@ -1,3 +1,7 @@
+form.block-layout {
+    gap: 1.5em;
+}
+
 form .form-input-block {
     display: flex;
     flex-direction: column;

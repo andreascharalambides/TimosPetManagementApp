@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import json
 
 
 class Pet(models.Model):
@@ -44,8 +45,18 @@ class Task(models.Model):
     comments = models.TextField(blank=True)
     start_date = models.DateTimeField()
     frequently = models.CharField(max_length=50)  # Stores days as comma-separated values
-    end_date = models.DateTimeField()
+    end_date = models.DateTimeField(null=True, blank=True)
     important = models.BooleanField(default=False)
 
     def __str__(self):
         return self.data
+
+    @property
+    def frequently_as_json(self):
+        """Returns the `frequently` field as a JSON array."""
+        if self.frequently:
+            # Convert comma-separated string to a list
+            frequently_list = self.frequently.split(',')
+            # Convert the list to a JSON string
+            return json.dumps(frequently_list)
+        return json.dumps([])  # Return an empty JSON array if `frequently` is empty

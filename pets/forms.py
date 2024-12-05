@@ -31,7 +31,8 @@ class TaskForm(forms.ModelForm):
     frequently = forms.MultipleChoiceField(
         choices=DAYS_OF_WEEK,
         widget=forms.CheckboxSelectMultiple,
-        label="Repeat Every"
+        label="Repeat Every",
+        required=False,
     )
     new_category = forms.CharField(
         max_length=100,
@@ -44,20 +45,22 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = [
-            'pet', 'category', 'new_category', 'comments',
+            'pet', 'category', 'new_category', 'comments', 'data',
             'start_date', 'frequently', 'end_date', 'important'
         ]
         widgets = {
             'start_date': DateTimeInput(attrs={"type": "datetime-local"}),
             'end_date': DateTimeInput(attrs={"type": "date"}),
-            'comments': forms.Textarea(attrs={"rows": 3, "placeholder": "Additional information..."}),
+            'comments': forms.Textarea(attrs={"rows": 3, "placeholder": "Additional comments..."}),
+            'data': forms.TextInput(attrs={"placeholder": "Task information..."}),
         }
         labels = {
             "category": "Task Type",
             "start_date": "Starts At",
             "end_date": "Ends On (optional)",
             "frequently": "Repeats Every",
-            "important": "Is Important"
+            "important": "Is Important",
+            "data": "Information (optional)",
         }
 
     def __init__(self, *args, **kwargs):
@@ -69,23 +72,26 @@ class TaskForm(forms.ModelForm):
 
         if user:
             self.fields['pet'].queryset = Pet.objects.filter(user=user)
-            self.fields['category'].choices = ([(cat.id, cat.name) for cat in Category.objects.filter(user=user)] +
-                                               [('--new-type--', '+ New Type')])
+            self.fields['category'].queryset = Category.objects.filter(user=user)
+            # self.fields['category'].choices = ([(cat.id, cat.name) for cat in Category.objects.filter(user=user)] +
+            #                                    [('--new-type--', '+ New Type')])
         else:
             self.fields['pet'].queryset = Pet.objects.none()
-            self.fields['category'].queryset = [('new', '+ New Type')]
+            self.fields['category'].queryset = Category.objects.none()
 
         self.fields['end_date'].required = False
-        self.fields['frequently'].required = False
+        self.fields['data'].required = False
 
         self.fields['category'].empty_label = None
 
     def clean(self):
         cleaned_data = super().clean()
-        category = cleaned_data.get('category')
-        new_category = cleaned_data.get('new_category')
+        category = cleaned_data.get("category")
+        new_category = cleaned_data.get("new_category")
 
-        if not category and not new_category:
-            raise forms.ValidationError("Please select an category or enter a new category.")
+        if category == "--new-type--" and not new_category:
+            self.add_error("new_category", "Please provide a name for the new category.")
+        elif not category and not new_category:
+            raise forms.ValidationError("Please select a category or enter a new category.")
 
         return cleaned_data

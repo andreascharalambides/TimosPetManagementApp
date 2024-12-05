@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Add a New Task{% endblock %}
+{% block content %}
+    <form class="block-layout" method="POST">
+        <h2>Add a New Task</h2>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="row-form-input-block">
+            <div class="form-input-block" style="flex-grow: 1">
+                {{ form.pet.label_tag }}
+                {{ form.pet }}
+                {{ form.pet.errors }}
+            </div>
+
+            <div class="form-input-block" style="flex-grow: 1">
+                {{ form.category.label_tag }}
+                {{ form.category }}
+                {{ form.category.errors }}
+            </div>
+        </div>
+
+        <div id="new_category_div" class="form-input-block" style="margin-top: -1em">
+            {{ form.new_category }}
+            {{ form.new_category.errors }}
+        </div>
+
+        <div class="form-input-block">
+            {{ form.start_date.label_tag }}
+            {{ form.start_date }}
+            {{ form.start_date.errors }}
+        </div>
+
+        <div class="form-input-block">
+            <p>{{ form.frequently.label_tag }}</p>
+            <div class="day-selector">
+                {% for day in form.frequently.field.choices %}
+                    <label class="day-button">
+                        <input type="checkbox" name="frequently" value="{{ day.0 }}">
+                        <span>{{ day.1|slice:":1" }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+            {{ form.frequently.errors }}
+        </div>
+
+        <div class="form-input-block">
+            {{ form.data.label_tag }}
+            {{ form.data }}
+            {{ form.data.errors }}
+        </div>
+
+        <div class="form-input-block">
+            {{ form.comments.label_tag }}
+            {{ form.comments }}
+            {{ form.comments.errors }}
+        </div>
+    
+        <div class="row-form-input-block">
+            <div class="form-input-block" style="flex-grow: 1">
+                {{ form.end_date.label_tag }}
+                {{ form.end_date }}
+                {{ form.end_date.errors }}
+            </div>
+
+            <div class="form-input-block toggle-checkbox" style="margin-top: auto">
+                {{ form.important }}
+                {{ form.important.label_tag }}
+            </div>
+        </div>
+
+        <button type="submit" class="primary-button">Update Task</button>
+        <button type="button" class="primary-button">Update Task</button>
+    </form>
+
+    <script src="{% static 'js/add_task.js' %}"></script>
+{% endblock %}

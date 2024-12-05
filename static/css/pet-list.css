@@ -1,8 +1,17 @@
 .pet-list {
-    list-style-type: none;
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 1.5em;
+
+    margin: 0 calc(var(--page-margin) * -1);
+    height: 100%;
+
+    padding: 0.5em var(--page-margin);
+    overflow: auto;
+    z-index: 1;
+
+    list-style-type: none;
 }
 
 .pet-list > li > a {
@@ -12,11 +21,29 @@
     align-items: center;
 
     text-decoration: none;
-    color: black;
+    color: var(--text-color);
 }
 
 .pet-list > li > a > img {
     border-radius: 100%;
     width: 6em;
     height: 6em;
+}
+
+#add-pet-button {
+    width: 2em;
+    height: 2em;
+    padding: 0.5em;
+    border-radius: 100%;
+    background-color: var(--grey-4);
+}
+
+#add-pet-button > svg {
+    fill: var(--grey-2);
+}
+
+#add-pet-button + h3 {
+    color: var(--grey-2);
+    font-size: 1em;
+    text-wrap: nowrap;
 }

@@ -1,0 +1,2 @@
+Fix the --new-type-- in add task > category
+Make the pet dropdown in add task multi selection (and update db accordingly)

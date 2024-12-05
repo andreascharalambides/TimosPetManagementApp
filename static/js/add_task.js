@@ -7,10 +7,10 @@ function setupCategory() {
     const categoryField = document.getElementById("id_category");
     const newCategoryDiv = document.getElementById("new_category_div");
 
-    if (categoryField.value !== "new") newCategoryDiv.style.display = "none";
+    if (categoryField.value !== "--new-type--") newCategoryDiv.style.display = "none";
 
     categoryField.addEventListener("change", () => {
-        newCategoryDiv.style.display = categoryField.value === "new" ? "flex" : "none";
+        newCategoryDiv.style.display = categoryField.value === "--new-type--" ? "flex" : "none";
     });
 }
 

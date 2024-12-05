@@ -27,12 +27,14 @@
     {% endif %}
 </nav>
 
-{% block content %}
-{% endblock %}
-
 <script>
     const backArrowUrl = "{% static 'assets/icons/back-arrow.svg' %}";
 </script>
-<script src="{% static 'js/scripts.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+<script src="{% static 'js/base.js' %}"></script>
+
+{% block content %}
+{% endblock %}
+
 </body>
 </html>

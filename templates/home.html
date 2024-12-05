@@ -4,7 +4,7 @@
 {% block content %}
     <div class="block-layout">
         <h1>Welcome, {{ user.first_name }}!</h1>
-    
+
         <ul class="pet-list">
             {% for pet in pets %}
                 <li><a href="{% url 'pet_detail' pet.pk %}">
@@ -12,21 +12,45 @@
                     <h3>{{ pet.name }}</h3>
                 </a></li>
             {% endfor %}
-                <li><a href="{% url 'add_pet' %}">
-                    +
-                </a></li>
+            <li><a href="{% url 'add_pet' %}">
+                <div id="add-pet-button">+</div>
+                <h3>Add pet</h3>
+            </a></li>
         </ul>
 
-        <h2>Your Tasks</h2>
-        <ul>
-            {% for task in tasks %}
-                <li>
-                    {{ task.data }} for {{ task.pet.name }} on {{ task.frequently }}
-                </li>
-            {% empty %}
-                <li>You have no tasks yet.</li>
-            {% endfor %}
-        </ul>
-        <a href="{% url 'add_task' %}">Add a new task</a>
+        <div class="task-list-container">
+            <div class="task-list-title">
+                <h2>Your Tasks</h2>
+                <div style="flex-grow: 1"></div>
+                <a href="{% url 'add_task' %}">
+                    <button class="secondary-button" type="button">+ Task</button>
+                </a>
+            </div>
+
+            <ul class="task-list">
+                <script>let days, dateElement;</script>
+                {% for task in tasks %}
+                    <li><a href="{% url 'update_task' task.id %}">
+                        <h4>{{ task.category }} for {{ task.pet }} at {{ task.start_date|date:"H:i" }}</h4>
+                        <script>
+                            days = parseFrequently("{{ task.frequently }}");
+                            dateElement = document.createElement("h4");
+
+                            if (days.length === 7) dateElement.textContent = "Everyday";
+                            else if (days.length > 0) dateElement.textContent = "Every " + days.join(", ");
+                            else dateElement.textContent = "{{ task.start_date|date }}";
+                            document.currentScript.parentElement.appendChild(dateElement);
+                        </script>
+                    </a></li>
+                {% empty %}
+                    <li>You have no tasks yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
     </div>
+    <script>
+        const addIconUrl = "{% static 'assets/icons/add.svg' %}";
+    </script>
+    <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}
