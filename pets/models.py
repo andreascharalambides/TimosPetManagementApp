@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-import json
+from django.db.models import Q
+from datetime import datetime
 
 
 class Pet(models.Model):
@@ -51,12 +52,27 @@ class Task(models.Model):
     def __str__(self):
         return self.data
 
-    @property
-    def frequently_as_json(self):
-        """Returns the `frequently` field as a JSON array."""
-        if self.frequently:
-            # Convert comma-separated string to a list
-            frequently_list = self.frequently.split(',')
-            # Convert the list to a JSON string
-            return json.dumps(frequently_list)
-        return json.dumps([])  # Return an empty JSON array if `frequently` is empty
+    @staticmethod
+    def get_tasks_for_day(user, day):
+        """
+        Get tasks for a user that occur on a specific day.
+
+        :param user: The user for whom tasks are retrieved.
+        :param day: A `datetime.date` object for the day to filter tasks.
+        :return: QuerySet of tasks.
+        """
+        start_of_day = datetime.combine(day, datetime.min.time())
+        end_of_day = datetime.combine(day, datetime.max.time())
+        day_name = day.strftime('%A')[:3]
+
+        specific_start_date_tasks = Q(start_date__date=day)
+
+        frequent_tasks = (
+                Q(frequently__icontains=day_name) &
+                Q(start_date__lte=end_of_day) &
+                (Q(end_date__isnull=True) | Q(end_date__gte=start_of_day))
+        )
+
+        return Task.objects.filter(
+            (specific_start_date_tasks | frequent_tasks) & Q(pet__user=user)
+        )

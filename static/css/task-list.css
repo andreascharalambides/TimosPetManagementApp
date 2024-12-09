@@ -16,6 +16,20 @@
     list-style-type: none;
 }
 
+.task-list > #date-navigation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--grey-4);
+    padding: 0.4em;
+}
+
+.task-list > #date-navigation > :nth-child(2) {
+    flex-grow: 1;
+    text-align: center;
+    font-weight: 700;
+}
+
 .task-list > li {
     display: flex;
     flex-direction: column;

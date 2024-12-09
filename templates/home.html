@@ -28,29 +28,18 @@
             </div>
 
             <ul class="task-list">
-                <script>let days, dateElement;</script>
-                {% for task in tasks %}
-                    <li><a href="{% url 'update_task' task.id %}">
-                        <h4>{{ task.category }} for {{ task.pet }} at {{ task.start_date|date:"H:i" }}</h4>
-                        <script>
-                            days = parseFrequently("{{ task.frequently }}");
-                            dateElement = document.createElement("h4");
-
-                            if (days.length === 7) dateElement.textContent = "Everyday";
-                            else if (days.length > 0) dateElement.textContent = "Every " + days.join(", ");
-                            else dateElement.textContent = "{{ task.start_date|date }}";
-                            document.currentScript.parentElement.appendChild(dateElement);
-                        </script>
-                    </a></li>
-                {% empty %}
-                    <li>You have no tasks yet.</li>
-                {% endfor %}
+                <li id="date-navigation">
+                    <button id="prev-day-button" class="icon-button">&lt;</button>
+                    <div id="selected-date"></div>
+                    <button id="next-day-button" class="icon-button">&gt;</button>
+                </li>
             </ul>
         </div>
 
     </div>
     <script>
         const addIconUrl = "{% static 'assets/icons/add.svg' %}";
+        const selectedDay = "{{ selected_day|date:'Y-m-d' }}";
     </script>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

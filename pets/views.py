@@ -1,4 +1,6 @@
+from datetime import datetime
 from django.shortcuts import redirect
+from django.utils.timezone import now
 from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Pet, Task, Category
@@ -11,8 +13,22 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        # Get the selected day from query parameters, default to today
+        day_param = self.request.GET.get("day")
+        if day_param:
+            try:
+                selected_day = datetime.strptime(day_param, "%Y-%m-%d").date()
+            except ValueError:
+                selected_day = now().date()
+        else:
+            selected_day = now().date()
+
+        # Fetch pets and tasks for the user
         context['pets'] = Pet.objects.filter(user=self.request.user)
-        context['tasks'] = Task.objects.filter(pet__user=self.request.user)
+        context['tasks'] = Task.get_tasks_for_day(user=self.request.user, day=selected_day)
+        context['selected_day'] = selected_day  # Pass the selected day to the template
+
         return context
 
 
@@ -98,3 +114,40 @@ class TaskDeleteView(DeleteView):
         if self.object.pet.user == self.request.user:
             self.object.delete()
         return redirect(self.success_url)
+
+from django.http import JsonResponse
+from datetime import datetime
+from .models import Task
+
+def fetch_tasks_for_day(request):
+    """
+    API endpoint to fetch tasks for a specific day.
+    """
+    if not request.user.is_authenticated:
+        return JsonResponse({"error": "Unauthorized"}, status=401)
+
+    day_param = request.GET.get("day")
+    if not day_param:
+        return JsonResponse({"error": "Day parameter is required"}, status=400)
+
+    try:
+        selected_day = datetime.strptime(day_param, "%Y-%m-%d").date()
+    except ValueError:
+        return JsonResponse({"error": "Invalid date format. Use YYYY-MM-DD."}, status=400)
+
+    tasks = Task.get_tasks_for_day(user=request.user, day=selected_day)
+
+    # Serialize task data
+    task_data = [
+        {
+            "id": task.id,
+            "category": task.category.name if task.category else "No Category",
+            "pet": task.pet.name,
+            "start_time": task.start_date.strftime("%H:%M"),
+            "frequently": task.frequently,
+            "important": task.important,
+        }
+        for task in tasks
+    ]
+
+    return JsonResponse({"tasks": task_data}, status=200)
