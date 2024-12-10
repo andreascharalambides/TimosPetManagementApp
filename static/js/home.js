@@ -4,6 +4,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const date = selectedDay ? new Date(selectedDay) : new Date();
     setupEvents(date);
     updateDateDisplay(date);
+
+    const enableNotificationsBtn = document.getElementById('enable-notifications');
+    enableNotificationsBtn.addEventListener('click', async () => {
+        // Now this is triggered by a user gesture
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') {
+            console.log('Notification permission not granted.');
+            return;
+        }
+
+        // Proceed with service worker registration and subscription
+        const registration = await navigator.serviceWorker.register('static/js/service-worker.js');
+        const vapidPublicKey = "BHZew5RS_iHtJQhNfa9ALccaWy76vbAzkDSo6gQ8PtP5bJjYOr8RuWXjE0mk-Qj-O5EuE7Kur9-dj_HkKGjxMas";
+        const convertedKey = urlBase64ToUint8Array(vapidPublicKey);
+        const swRegistration = await navigator.serviceWorker.ready;
+        const subscription = await swRegistration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: convertedKey
+        });
+
+        console.log("Subscription:", subscription);
+
+        await fetch('/users/save_subscription/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({subscription: subscription})
+        });
+    });
 });
 
 function setupAddPet() {
@@ -43,12 +74,12 @@ function updateDateDisplay(date) {
 }
 
 function setupEvents(date) {
-    document.getElementById("prev-day-button").addEventListener("click",  () => {
+    document.getElementById("prev-day-button").addEventListener("click", () => {
         date.setDate(date.getDate() - 1);
         updateDateDisplay(date);
     });
 
-    document.getElementById("next-day-button").addEventListener("click",  () => {
+    document.getElementById("next-day-button").addEventListener("click", () => {
         date.setDate(date.getDate() + 1);
         updateDateDisplay(date);
     });
@@ -99,4 +130,17 @@ async function fetchAndUpdateTasks(date) {
         console.error(error);
         taskListElement.innerHTML = "<li>Failed to load tasks.</li>";
     }
+}
+
+function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    return Uint8Array.from([...rawData].map((char) => char.charCodeAt(0)));
+}
+
+function getCSRFToken() {
+    return document.cookie.match(/csrftoken=([^;]+)/)[1];
 }
