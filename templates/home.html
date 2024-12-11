@@ -7,12 +7,12 @@
 
         <ul class="pet-list">
             {% for pet in pets %}
-                <li><a href="{% url 'pet_detail' pet.pk %}">
+                <li><a href="{% url 'pet_detail' pet.pk %}" onclick="logUserAction('click_pet')">
                     <img id="pet-image" src="{{ pet.photo.url }}" alt="{{ pet.name }} Profile">
                     <h3>{{ pet.name }}</h3>
                 </a></li>
             {% endfor %}
-            <li><a href="{% url 'add_pet' %}">
+            <li><a href="{% url 'add_pet' %}" onclick="logUserAction('add_pet')">
                 <div id="add-pet-button">+</div>
                 <h3>Add pet</h3>
             </a></li>
@@ -23,7 +23,7 @@
                 <h2>Your Tasks</h2>
                 <div style="flex-grow: 1"></div>
                 <a href="{% url 'add_task' %}">
-                    <button class="secondary-button" type="button">+ Task</button>
+                    <button class="secondary-button" onclick="logUserAction('add_task')" type="button">+ Task</button>
                 </a>
             </div>
 
@@ -42,7 +42,6 @@
         const addIconUrl = "{% static 'assets/icons/add.svg' %}";
         const selectedDay = "{{ selected_day|date:'Y-m-d' }}";
     </script>
-    {#    <script src="{% static 'js/home.js' %}"></script>#}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             setupAddPet();
@@ -152,6 +151,7 @@
                         const taskItem = document.createElement("li");
                         const taskLink = document.createElement("a");
                         taskLink.href = `${updateTaskBaseUrl}${task.id}`;  // Modified line
+                        taskLink.setAttribute('onclick', "logUserAction('click_task')");
 
                         const taskTitle = document.createElement("h4");
                         taskTitle.textContent = `${task.category} for ${task.pet} at ${task.start_time}`;

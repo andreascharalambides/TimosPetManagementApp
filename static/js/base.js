@@ -55,3 +55,14 @@ function urlBase64ToUint8Array(base64String) {
     const rawData = window.atob(base64);
     return Uint8Array.from([...rawData].map((char) => char.charCodeAt(0)));
 }
+
+function logUserAction(action, extraData = {}) {
+    fetch('/logs/log_action/', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCSRFToken(),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({action: action})
+    });
+}

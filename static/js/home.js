@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     setupAddPet();
+    logUserAction('open_app');
 
     const date = selectedDay ? new Date(selectedDay) : new Date();
     setupEvents(date);
