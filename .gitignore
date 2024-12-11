@@ -17,9 +17,6 @@ ENV/
 # PyCharm project files
 .idea/
 
-# Media uploads
-media/
-
 # Static files
 staticfiles/
 
