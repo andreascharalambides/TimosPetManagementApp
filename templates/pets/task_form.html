@@ -7,24 +7,28 @@
         {% csrf_token %}
         {{ form.non_field_errors }}
 
+        <div class="form-input-block" style="flex-grow: 1">
+            {{ form.pet.label_tag }}
+            {{ form.pet }}
+            {{ form.pet.errors }}
+        </div>
+
         <div class="row-form-input-block">
-            <div class="form-input-block" style="flex-grow: 1">
-                {{ form.pet.label_tag }}
-                {{ form.pet }}
-                {{ form.pet.errors }}
-            </div>
+
 
             <div class="form-input-block" style="flex-grow: 1">
                 {{ form.category.label_tag }}
                 {{ form.category }}
                 {{ form.category.errors }}
             </div>
+
+            <div id="new_category_div" class="form-input-block" style="flex-grow: 1">
+                {{ form.new_category.label_tag }}
+                {{ form.new_category }}
+                {{ form.new_category.errors }}
+            </div>
         </div>
 
-        <div id="new_category_div" class="form-input-block" style="margin-top: -1em">
-            {{ form.new_category }}
-            {{ form.new_category.errors }}
-        </div>
 
         <div class="form-input-block">
             {{ form.start_date.label_tag }}

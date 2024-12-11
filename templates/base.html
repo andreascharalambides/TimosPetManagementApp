@@ -17,9 +17,10 @@
 <nav>
     {% if user.is_authenticated %}
         {% if request.path != '/' and request.path != '/pets/' %}
-            <p id="back-button"></p>
+            <p id="back-button" class="icon-button"></p>
         {% endif %}
         <div style="flex-grow: 1"></div>
+        <p id="notification-button" class="icon-button"></p>
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
             <button type="submit" class="secondary-button">Logout</button>
@@ -29,6 +30,7 @@
 
 <script>
     const backArrowUrl = "{% static 'assets/icons/back-arrow.svg' %}";
+    const notificationUrl = "{% static 'assets/icons/notification.svg' %}";
 </script>
 <script src="{% static 'js/utils.js' %}"></script>
 <script src="{% static 'js/base.js' %}"></script>

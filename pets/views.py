@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.shortcuts import redirect
 from django.utils.timezone import now
 from django.views.generic import TemplateView, DetailView, CreateView, UpdateView, DeleteView

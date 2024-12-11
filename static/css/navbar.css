@@ -3,14 +3,15 @@ nav {
     flex-direction: row;
     align-items: center;
     padding: 2em var(--page-margin) 0.5em var(--page-margin);
+    gap: 0.5em;
 }
 
-nav #back-button {
+nav .icon-button {
     width: 2em;
     height: 2em;
 }
 
-nav #back-button > svg {
+nav .icon-button > svg {
     fill: var(--grey-2);
 }
 

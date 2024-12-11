@@ -38,7 +38,7 @@ class TaskForm(forms.ModelForm):
         max_length=100,
         required=False,
         help_text="Add a new category if needed.",
-        label="Task Name",
+        label="Or create a new type",
         widget=forms.TextInput(attrs={"placeholder": "New task name..."}),
     )
 
@@ -60,7 +60,7 @@ class TaskForm(forms.ModelForm):
             "end_date": "Ends On (optional)",
             "frequently": "Repeats Every",
             "important": "Is Important",
-            "data": "Information (optional)",
+            "data": "Information (optional)"
         }
 
     def __init__(self, *args, **kwargs):
@@ -73,8 +73,6 @@ class TaskForm(forms.ModelForm):
         if user:
             self.fields['pet'].queryset = Pet.objects.filter(user=user)
             self.fields['category'].queryset = Category.objects.filter(user=user)
-            # self.fields['category'].choices = ([(cat.id, cat.name) for cat in Category.objects.filter(user=user)] +
-            #                                    [('--new-type--', '+ New Type')])
         else:
             self.fields['pet'].queryset = Pet.objects.none()
             self.fields['category'].queryset = Category.objects.none()
