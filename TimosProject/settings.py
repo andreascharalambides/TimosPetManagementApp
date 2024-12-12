@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-_l@9$9)_ztr($q$u2e8ixy#_i!vz982i(+t%l1_eg18le6swv=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['timospetapp.fr', 'www.timospetapp.fr', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['timospetapp.fr', 'www.timospetapp.fr', '127.0.0.1', 'localhost', '164.90.166.75']
 
 
 # Application definition
