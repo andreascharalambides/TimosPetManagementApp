@@ -79,6 +79,7 @@ class TaskForm(forms.ModelForm):
 
         self.fields['end_date'].required = False
         self.fields['data'].required = False
+        self.fields['category'].required = False
 
         self.fields['category'].empty_label = None
 
