@@ -53,6 +53,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://timospetapp.fr',
+    'https://www.timospetapp.fr',  # Include both with and without "www" if applicable
+]
+
 ROOT_URLCONF = "TimosProject.urls"
 
 TEMPLATES = [
