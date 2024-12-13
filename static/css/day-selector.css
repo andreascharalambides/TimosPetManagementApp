@@ -1,7 +1,9 @@
+/* day-selector.css */
 .day-selector {
     display: flex;
     justify-content: space-between;
     margin: 0.5em 0 0 0;
+    gap: 0.5em;
 }
 
 .day-button {
@@ -9,14 +11,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 2em;
     height: 2em;
     border-radius: 50%;
     background-color: var(--grey-4);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease-in-out;
     user-select: none;
+}
+
+.day-button:hover {
+    background-color: var(--grey-3);
+    transform: translateY(-1px);
 }
 
 .day-button input[type="checkbox"] {
@@ -29,7 +35,10 @@
 
 .day-button input[type="checkbox"]:checked + span {
     font-weight: 700;
+    color: white;
 }
+
 .day-button:has(input[type="checkbox"]:checked) {
     background-color: var(--color-1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

@@ -1,49 +1,75 @@
+/* pet_list.css */
 .pet-list {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1.5em;
-
+    gap: 2em;
     margin: 0 calc(var(--page-margin) * -1);
     height: 100%;
-
-    padding: 0.5em var(--page-margin);
-    overflow: auto;
-    z-index: 1;
-
+    padding: 1em var(--page-margin);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     list-style-type: none;
+}
+
+.pet-list::-webkit-scrollbar {
+    display: none;
 }
 
 .pet-list > li > a {
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
+    gap: 0.8em;
     align-items: center;
-
     text-decoration: none;
     color: var(--text-color);
+    transition: transform 0.2s ease-in-out;
+}
+
+.pet-list > li > a:hover {
+    transform: translateY(-2px);
 }
 
 .pet-list > li > a > img {
     border-radius: 100%;
     width: 6em;
     height: 6em;
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 3px solid white;
 }
 
 #add-pet-button {
-    width: 2em;
-    height: 2em;
-    padding: 0.5em;
+    width: 2.5em;
+    height: 2.5em;
+    padding: 0.6em;
     border-radius: 100%;
     background-color: var(--grey-4);
+    transition: all 0.2s ease-in-out;
+}
+
+#add-pet-button:hover {
+    background-color: var(--grey-3);
+    transform: scale(1.05);
 }
 
 #add-pet-button > svg {
-    fill: var(--grey-2);
+    fill: var(--grey-1);
+    transition: fill 0.2s ease-in-out;
+}
+
+#add-pet-button:hover > svg {
+    fill: var(--text-color);
 }
 
 #add-pet-button + h3 {
     color: var(--grey-2);
     font-size: 1em;
     text-wrap: nowrap;
+    transition: color 0.2s ease-in-out;
+}
+
+#add-pet-button:hover + h3 {
+    color: var(--grey-1);
 }

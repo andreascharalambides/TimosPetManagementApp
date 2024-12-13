@@ -1,61 +1,219 @@
-form.block-layout {
+/* forms.css */
+/* Login/Register styles */
+.login-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.login-logo {
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--color-2);
+    padding: 0.3rem;
+}
+
+.login-header h2 {
+    color: var(--text-color);
+    font-size: 1.8rem;
+}
+
+form.block-layout,
+form.login-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    width: 90%;
+    margin: 4rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     gap: 1.5em;
 }
 
-form .form-input-block {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3em;
+.login-register-instead {
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--grey-3);
+    margin-top: 0.5rem;
+    color: var(--grey-1);
 }
 
-form .row-form-input-block {
+.login-register-instead a {
+    color: var(--color-1);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.login-register-instead a:hover {
+    color: color-mix(in srgb, var(--color-1) 85%, black);
+    text-decoration: underline;
+}
+
+/* Form Input Blocks */
+.form-input-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    width: 100%;
+}
+
+.row-form-input-block {
     display: flex;
     flex-direction: row;
     gap: 1em;
+    width: 100%;
 }
 
-form input, form select, form textarea {
+/* Form Elements */
+form input,
+form select,
+form textarea {
+    width: 100%;
     font-size: 1em;
-    padding: 0.5em;
-    border-radius: 0.2em;
-    border: 0.1em solid var(--color-2);
+    padding: 0.7em;
+    border-radius: 0.3em;
+    border: 0.1em solid var(--grey-3);
+    transition: all 0.2s ease-in-out;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+form select {
+    cursor: pointer;
 }
 
 form select option {
-    font-size: 0.5rem;
-    max-width: 0.6vw;
+    font-size: 0.9em;
+    padding: 0.5em;
 }
 
-form input:focus, form select:focus, form textarea:focus {
-    border: 0.12em solid var(--color-1);
+/* Form Element States */
+form input:hover,
+form select:hover,
+form textarea:hover {
+    border-color: var(--grey-2);
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: var(--color-1);
     outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-1) 25%, transparent);
 }
 
-form > ul {
-    background-color: var(--color-3);
-    padding: 1.2em;
-    border-radius: 0.3em;
-    margin: 0;
-    list-style-type: none;
-}
-
-form > ul > li:not(:last-child) {
-    margin-bottom: 0.8em;
-}
-
-form span.helptext, form p:empty {
-    display: none;
-}
-
-form .login-register-instead {
-    text-align: center;
-}
-
-form .login-register-instead a {
-    display: inline;
-}
-
-ul.errorlist {
+/* Error Styling */
+.errorlist {
+    list-style: none;
+    padding: 0.5em 0.8em;
+    margin: 0.2em 0;
     background-color: var(--accent-1-2);
     color: var(--accent-1-1);
+    border-radius: 0.3em;
+    font-size: 0.9em;
+    width: 100%;
+}
+
+.errorlist li {
+    margin: 0.2em 0;
+}
+
+/* Help Text */
+.helptext {
+    font-size: 0.9em;
+    color: var(--grey-1);
+    margin-top: 0.3em;
+}
+
+.helptext ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0.5em 0;
+}
+
+.helptext li {
+    margin: 0.3em 0;
+    padding-left: 1.2em;
+    position: relative;
+}
+
+.helptext li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--grey-2);
+}
+
+/* Toggle Checkbox */
+.toggle-checkbox {
+    width: 100%;
+}
+
+.toggle-checkbox label {
+    width: auto;
+    justify-content: center;
+}
+
+/* Day Selector */
+.day-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    justify-content: flex-start;
+}
+
+.day-button {
+    flex: 0 0 auto;
+}
+
+/* Delete Task Link */
+.delete-task-link {
+    width: 100%;
+    display: block;
+}
+
+.delete-task-link button {
+    width: 100%;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    form.block-layout,
+    form.login-form {
+        width: calc(100% - 2rem);
+        margin: 2rem auto;
+        padding: 1.5rem;
+    }
+
+    .login-logo {
+        width: 6rem;
+        height: 6rem;
+    }
+
+    .row-form-input-block {
+        flex-direction: column;
+        gap: 1.5em;
+    }
+
+    .form-input-block {
+        width: 100%;
+    }
+
+    .toggle-checkbox {
+        margin-top: 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    form.block-layout,
+    form.login-form {
+        margin: 1rem auto;
+    }
 }

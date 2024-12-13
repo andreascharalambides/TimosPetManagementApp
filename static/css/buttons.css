@@ -1,6 +1,10 @@
+/* buttons.css */
 button {
     font-size: 1rem;
     padding: 0.8em 1.2em;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .primary-button {
@@ -8,6 +12,17 @@ button {
     border-radius: 0.3em;
     font-weight: 600;
     border: none;
+}
+
+.primary-button:hover {
+    background-color: color-mix(in srgb, var(--color-1) 85%, black);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.primary-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .secondary-button {
@@ -18,12 +33,23 @@ button {
     font-weight: 600;
 }
 
+.secondary-button:hover {
+    background-color: var(--grey-4);
+    border-color: var(--grey-2);
+    color: color-mix(in srgb, var(--grey-1) 85%, black);
+}
+
 .accent-1-button {
     background-color: transparent;
-     color: var(--accent-1-1);
+    color: var(--accent-1-1);
     border: 0.1em solid var(--accent-1-2);
     border-radius: 0.3em;
     font-weight: 600;
+}
+
+.accent-1-button:hover {
+    background-color: var(--accent-1-2);
+    color: color-mix(in srgb, var(--accent-1-1) 85%, black);
 }
 
 .icon-button {
@@ -32,4 +58,13 @@ button {
     background-color: transparent;
     border: none;
     font-weight: 700;
+    border-radius: 0.3em;
+}
+
+.icon-button:hover {
+    background-color: var(--grey-4);
+}
+
+.icon-button:active {
+    background-color: var(--grey-3);
 }

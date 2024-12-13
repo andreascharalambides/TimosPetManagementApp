@@ -12,14 +12,17 @@
     <link rel="stylesheet" href="{% static 'css/pet-profile.css' %}">
     <link rel="stylesheet" href="{% static 'css/task-list.css' %}">
     <link rel="stylesheet" href="{% static 'css/pet-list.css' %}">
-    
+
     <title>Timos</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<nav>
-    {% if user.is_authenticated %}
+{% if user.is_authenticated %}
+    <nav>
+        <a href="{% url 'home' %}" class="nav-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Timos Logo">
+        </a>
         {% if request.path != '/' and request.path != '/pets/' %}
             <p id="back-button" class="icon-button"></p>
         {% endif %}
@@ -29,8 +32,8 @@
             {% csrf_token %}
             <button type="submit" class="secondary-button">Logout</button>
         </form>
-    {% endif %}
-</nav>
+    </nav>
+{% endif %}
 
 <script>
     const backArrowUrl = "{% static 'assets/icons/back-arrow.svg' %}";
@@ -38,9 +41,11 @@
 </script>
 <script src="{% static 'js/utils.js' %}"></script>
 <script src="{% static 'js/base.js' %}"></script>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
 
-{% block content %}
-{% endblock %}
 
 </body>
 </html>

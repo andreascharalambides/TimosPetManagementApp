@@ -1,17 +1,21 @@
+/* toggle.css */
 :root {
-    --text-color: #1e201e;
+    --text-color: #1a1d1a;
 
-    --color-1: #84e684;
-    --color-2: #b7e6b7;
-    --color-3: #cff1cf;
+    /* Fresh, modern green palette */
+    --color-1: #34d399;  /* More vibrant primary green */
+    --color-2: #6ee7b7;
+    --color-3: #a7f3d0;
 
-    --accent-1-1: rgb(186, 28, 28);
-    --accent-1-2: rgb(255, 209, 209);
+    /* More impactful accent colors */
+    --accent-1-1: #dc2626;
+    --accent-1-2: #fecaca;
 
-    --grey-1: #666e65;
-    --grey-2: #b1b8b0;
-    --grey-3: #d6ddd5;
-    --grey-4: #e8ede6;
+    /* Refined grey palette */
+    --grey-1: #4b5563;
+    --grey-2: #9ca3af;
+    --grey-3: #e5e7eb;
+    --grey-4: #f3f4f6;
 
     --page-margin: 2rem;
 }

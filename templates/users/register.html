@@ -1,42 +1,90 @@
 {% extends "base.html" %}
+{% load static %}
+<!-- register.html -->
 
 {% block content %}
     <form class="block-layout" method="POST">
+    <div class="login-header">
+            <img src="{% static 'images/logo.png' %}" alt="Timos Logo" class="login-logo">
+            <h2>Register</h2>
+        </div>
         <h2>Register</h2>
         {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <ul class="errorlist">
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
         <div class="form-input-block">
             {{ form.username.label_tag }}
             {{ form.username }}
-            {{ form.username.errors }}
+            {% if form.username.errors %}
+                <ul class="errorlist">
+                    {% for error in form.username.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
 
         <div class="form-input-block">
             {{ form.first_name.label_tag }}
             {{ form.first_name }}
-            {{ form.first_name.errors }}
+            {% if form.first_name.errors %}
+                <ul class="errorlist">
+                    {% for error in form.first_name.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
 
         <div class="form-input-block">
             {{ form.last_name.label_tag }}
             {{ form.last_name }}
-            {{ form.last_name.errors }}
+            {% if form.last_name.errors %}
+                <ul class="errorlist">
+                    {% for error in form.last_name.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
 
         <div class="form-input-block">
             {{ form.password1.label_tag }}
             {{ form.password1 }}
-            {{ form.password1.errors }}
+            {% if form.password1.errors %}
+                <ul class="errorlist">
+                    {% for error in form.password1.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if form.password1.help_text %}
+                <div class="helptext">
+                    {{ form.password1.help_text|safe }}
+                </div>
+            {% endif %}
         </div>
-
-        {{ form.password1.help_text }}
 
         <div class="form-input-block">
             {{ form.password2.label_tag }}
             {{ form.password2 }}
-            {{ form.password2.errors }}
+            {% if form.password2.errors %}
+                <ul class="errorlist">
+                    {% for error in form.password2.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
         
         <button class="primary-button" type="submit">Register</button>
-        <p class="login-register-instead">Already Have an account? <a href="{% url 'login' %}">Log in instead</a></p>
+        <p class="login-register-instead">Already Have an account? <a href="{% url 'login' %}">Log in</a></p>
     </form>
 {% endblock %}

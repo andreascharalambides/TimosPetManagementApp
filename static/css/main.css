@@ -1,5 +1,7 @@
+/* main.css */
 * {
-    font-family: sans-serif;
+    font-family: system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
 }
 
 body {
@@ -7,13 +9,19 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: #f8fafc;
+    -webkit-font-smoothing: antialiased;
+}
+
+main {
+    padding: 0.2rem 3rem;
 }
 
 h1, h2, h3, h4, h5, h6, p, span, ul, li {
     color: var(--text-color);
     padding: 0;
     margin: 0;
+    line-height: 1.5;
 }
 
 svg {
@@ -27,18 +35,26 @@ svg {
     flex-direction: column;
     gap: 3em;
     margin: 3em var(--page-margin);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 a:has(button) {
     text-decoration: none;
+    display: inline-block;
 }
 
 :root {
-    font-size: 1rem;
+    font-size: 16px;
 }
 
 @media (min-width: 600px) {
     :root {
-        font-size: 1rem;
+        font-size: 16px;
+    }
+
+    .block-layout {
+        margin: 4em var(--page-margin);
     }
 }

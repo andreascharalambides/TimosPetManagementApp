@@ -1,19 +1,24 @@
+/* task_list.css */
 .task-list-container {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 1.5em;
 }
 
 .task-list-title {
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 1em;
 }
 
 .task-list {
-    border-radius: 0.3em;
+    border-radius: 0.5em;
     border: 0.1em solid var(--grey-3);
     list-style-type: none;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
 }
 
 .task-list > #date-navigation {
@@ -21,28 +26,34 @@
     flex-direction: row;
     align-items: center;
     background-color: var(--grey-4);
-    padding: 0.4em;
+    padding: 0.8em;
 }
 
 .task-list > #date-navigation > :nth-child(2) {
     flex-grow: 1;
     text-align: center;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .task-list > li {
     display: flex;
     flex-direction: column;
-    gap: 0.3em;
-    padding: 1em;
+    gap: 0.5em;
+    padding: 1.2em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.task-list > li:hover {
+    background-color: var(--grey-4);
 }
 
 .task-list > li > a {
     text-decoration: none;
+    color: var(--text-color);
 }
 
 .task-list > li > a > h4:not(:first-child) {
-    font-size: 0.8em;
+    font-size: 0.9em;
     color: var(--grey-1);
 }
 

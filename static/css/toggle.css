@@ -1,3 +1,4 @@
+/* toggle.css */
 .toggle-checkbox {
     display: inline-block;
     position: relative;
@@ -12,14 +13,22 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    padding: 0.5em 0.8em;
+    padding: 0.6em 1em;
     border: 0.1em solid var(--grey-3);
-    border-radius: 0.2em;
+    border-radius: 0.3em;
+    transition: all 0.2s ease-in-out;
+    background-color: white;
+}
+
+.toggle-checkbox label:hover {
+    background-color: var(--grey-4);
+    border-color: var(--grey-2);
 }
 
 .toggle-checkbox input[type="checkbox"]:checked + label {
     background-color: var(--color-1);
     border-color: var(--color-1);
-    font-weight: 700;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

@@ -1,23 +1,48 @@
 {% extends "base.html" %}
+{% load static %}
+<!-- login.html -->
 
 {% block content %}
     <form class="block-layout" method="POST">
+
+        <div class="login-header">
+            <img src="{% static 'images/logo.png' %}" alt="Timos Logo" class="login-logo">
+            <h2>Login</h2>
+        </div>
         <h2>Login</h2>
         {% csrf_token %}
+
         <div class="form-input-block">
             {{ form.username.label_tag }}
             {{ form.username }}
+            {% if form.username.errors %}
+                <ul class="errorlist">
+                    {% for error in form.username.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
 
         <div class="form-input-block">
             {{ form.password.label_tag }}
             {{ form.password }}
+            {% if form.password.errors %}
+                <ul class="errorlist">
+                    {% for error in form.password.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
-        
-        <div class="form-input-block">
-            {{ form.username.errors }}
-            {{ form.password.errors }}
-        </div>
+
+        {% if form.non_field_errors %}
+            <ul class="errorlist">
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
         <button class="primary-button" type="submit">Login</button>
         <p class="login-register-instead">New here? <a href="{% url 'register' %}">Register</a></p>
