@@ -30,7 +30,7 @@ async function enableNotifications() {
         console.log('Service Worker registered:', registration);
 
         // Ensure Service Worker is ready
-        // const swRegistration = await navigator.serviceWorker.ready;
+        const swRegistration = await navigator.serviceWorker.ready;
 
         console.log("Worker ready");
 
@@ -41,7 +41,7 @@ async function enableNotifications() {
         console.log("COnverted key")
 
         // Subscribe to push notifications
-        const subscription = await registration.pushManager.subscribe({
+        const subscription = await swRegistration.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: convertedKey,
         });
