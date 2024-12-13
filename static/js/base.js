@@ -1,16 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     setupBackButton();
-    setupNotificationButton();
 });
 
 function setupBackButton() {
     fetchSvg(backArrowUrl, document.getElementById("back-button"))?.addEventListener("click",
         () => window.history.back());
-}
-
-function setupNotificationButton() {
-    fetchSvg(notificationUrl, document.getElementById("notification-button"))?.addEventListener("click",
-        () => enableNotifications());
 }
 
 async function enableNotifications() {

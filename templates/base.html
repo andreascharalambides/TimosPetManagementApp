@@ -18,6 +18,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+<script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-messaging-compat.js"></script>
+
+<script>
+    const backArrowUrl = "{% static 'assets/icons/back-arrow.svg' %}";
+    const notificationUrl = "{% static 'assets/icons/notification.svg' %}";
+    const firebaseMessagingUrl = "{% static 'js/firebase-messaging-sw.js' %}"
+</script>
+
+<script src="{% static 'js/firebase.js' %}"></script>
 <nav>
     {% if user.is_authenticated %}
         {% if request.path != '/' and request.path != '/pets/' %}
@@ -32,10 +42,6 @@
     {% endif %}
 </nav>
 
-<script>
-    const backArrowUrl = "{% static 'assets/icons/back-arrow.svg' %}";
-    const notificationUrl = "{% static 'assets/icons/notification.svg' %}";
-</script>
 <script src="{% static 'js/utils.js' %}"></script>
 <script src="{% static 'js/base.js' %}"></script>
 

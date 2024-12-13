@@ -6,7 +6,7 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from .models import PushSubscription
+from .models import PushSubscription, DeviceToken
 
 
 def register(request):
@@ -23,6 +23,17 @@ def register(request):
 class UserLoginView(LoginView):
     authentication_form = UserLoginForm
 
+@csrf_exempt
+def save_token(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        token = data.get('token')
+        user = request.user
+
+        if user.is_authenticated and token:
+            DeviceToken.objects.get_or_create(user=user, token=token)
+            return JsonResponse({'message': 'Token saved successfully.'})
+        return JsonResponse({'error': 'Invalid request.'}, status=400)
 
 @csrf_exempt
 @login_required

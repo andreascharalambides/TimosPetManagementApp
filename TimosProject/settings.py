@@ -16,7 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ SECRET_KEY = "django-insecure-_l@9$9)_ztr($q$u2e8ixy#_i!vz982i(+t%l1_eg18le6swv=
 DEBUG = True
 
 ALLOWED_HOSTS = ['timospetapp.fr', 'www.timospetapp.fr', '127.0.0.1', 'localhost', '164.90.166.75']
-
 
 # Application definition
 
@@ -40,7 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "pets.apps.PetsConfig",
     "users.apps.UsersConfig",
-    "logs.apps.LogsConfig"
+    "logs.apps.LogsConfig",
+    "push_notifications",
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +52,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+PUSH_NOTIFICATIONS_SETTINGS = {
+    "FCM_API_KEY": "FlA__O-T3zviunopwSPiNZduVoD_Zn3UE7toKdsGudo",
+}
 
 CSRF_TRUSTED_ORIGINS = [
     'https://timospetapp.fr',
@@ -79,7 +83,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "TimosProject.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -89,7 +92,6 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -109,7 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -120,7 +121,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = False
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -147,7 +147,6 @@ LOGIN_URL = 'login'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
 from celery.schedules import crontab
 
 CELERY_BEAT_SCHEDULE = {
@@ -162,3 +161,12 @@ VAPID_PRIVATE_KEY = "Qze1X_HFcZc-kfzK4NzPTUeSEFVhRdLrfTvnzg45pUk"
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+import firebase_admin
+from firebase_admin import credentials
+
+# Path to your service account key file
+FIREBASE_CRED = credentials.Certificate("timospetapp-firebase-adminsdk-a7wgl-f4c79c595c.json")
+firebase_admin.initialize_app(FIREBASE_CRED)

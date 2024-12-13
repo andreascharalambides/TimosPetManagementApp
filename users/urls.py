@@ -13,5 +13,5 @@ urlpatterns = [
 
     # Notification
     path('save_subscription/', views.save_subscription, name='save_subscription'),
-
+    path('save-token/', views.save_token, name='save_token')
 ]
