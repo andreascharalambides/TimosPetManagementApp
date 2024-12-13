@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     setupBackButton();
     setupNotificationButton();
+
+    if (localStorage.getItem('serviceWorkerReload') === 'true') {
+        localStorage.removeItem('serviceWorkerReload');
+        enableFullNotificationSetup();
+    }
 });
 
 function setupBackButton() {
@@ -17,31 +22,46 @@ function setupNotificationButton() {
 
 async function enableNotifications() {
     try {
-        console.log("Enabling notifs")
-        // Request notification permissions from the user
-        const permission = await Notification.requestPermission();
-        if (permission !== 'granted') {
-            console.log('Notification permission not granted.');
-            return;
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        for (let registration of registrations) {
+            await registration.unregister();
+            console.log('Unregistered existing service worker');
         }
 
         // Register the Service Worker
-        const registration = await navigator.serviceWorker.register('/users/service-worker');
-        console.log('Service Worker registered:', registration);
+        await navigator.serviceWorker.register('/users/service-worker');
 
-        // Ensure Service Worker is ready
-        const swRegistration = await navigator.serviceWorker.ready;
+        // Wait for activation with more detailed tracking
+        if (!navigator.serviceWorker.controller) {
+            localStorage.setItem('serviceWorkerReload', 'true');
+            window.location.reload();
+        } else enableFullNotificationSetup();
 
-        console.log("Worker ready");
+    } catch (error) {
+        console.error('Error enabling notifications:', error);
+    }
+}
+
+async function enableFullNotificationSetup() {
+    try {
+        // Request notification permissions
+        // Directly get the registration instead of using .ready
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        const registration = registrations[0];
+
+        if (!registration) {
+            console.error('No service worker registration found');
+            return;
+        }
+
+        console.log('Service worker registration:', registration);
 
         // VAPID public key for push notifications
         const vapidPublicKey = "BHZew5RS_iHtJQhNfa9ALccaWy76vbAzkDSo6gQ8PtP5bJjYOr8RuWXjE0mk-Qj-O5EuE7Kur9-dj_HkKGjxMas";
         const convertedKey = urlBase64ToUint8Array(vapidPublicKey);
 
-        console.log("COnverted key")
-
         // Subscribe to push notifications
-        const subscription = await swRegistration.pushManager.subscribe({
+        const subscription = await registration.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: convertedKey,
         });
