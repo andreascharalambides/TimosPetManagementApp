@@ -14,4 +14,5 @@ urlpatterns = [
     # Notification
     path('save_subscription/', views.save_subscription, name='save_subscription'),
 
+    path('service-worker', views.service_worker, name='service_worker'),
 ]

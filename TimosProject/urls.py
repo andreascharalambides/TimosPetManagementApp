@@ -20,11 +20,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
 
+from users.views import service_worker
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("pets.urls")),
     path("users/", include("users.urls")),
     path('logs/', include('logs.urls')),
+
+path('static/js/service-worker.js', service_worker, name='service_worker'),
 ]
 
 if settings.DEBUG:
