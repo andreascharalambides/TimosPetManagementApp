@@ -25,7 +25,7 @@ def send_task_notifications():
         )
     )
 
-    for task in Task.objects.all():
+    for task in tasks_soon:
         user = task.pet.user
         subscriptions = user.push_subscriptions.all()
         for sub in subscriptions:
