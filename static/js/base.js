@@ -17,6 +17,7 @@ function setupNotificationButton() {
 
 async function enableNotifications() {
     try {
+        console.log("Enabling notifs")
         // Request notification permissions from the user
         const permission = await Notification.requestPermission();
         if (permission !== 'granted') {
