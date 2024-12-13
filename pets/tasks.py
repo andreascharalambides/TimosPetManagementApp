@@ -11,8 +11,7 @@ from pywebpush import webpush, WebPushException
 
 def send_task_notifications():
     print("Running send_task_notifications...")
-    now = timezone.now()
-    reminder_time = now + timedelta(minutes=1)
+    now = timezone.now() + timedelta(hours=1)
     current_day_name = now.strftime('%a')
 
     tasks_soon = Task.objects.filter(
@@ -25,7 +24,7 @@ def send_task_notifications():
         )
     )
 
-    for task in Task.objects.all():
+    for task in tasks_soon:
         user = task.pet.user
         subscriptions = user.push_subscriptions.all()
         for sub in subscriptions:
